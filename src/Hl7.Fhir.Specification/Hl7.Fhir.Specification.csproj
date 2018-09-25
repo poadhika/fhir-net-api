@@ -36,31 +36,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.Specification.Data\Hl7.Fhir.Specification.Data.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
     <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <FhirConformance Include="data\*.*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="specification.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackagePath>contentFiles\any\any</PackagePath>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-      <PackageFlatten>true</PackageFlatten>
-    </Content>
-  </ItemGroup>
- 
-  <Target Name="CreateSpecZip" Inputs="@(FhirConformance)" Outputs="specification.zip" BeforeTargets="Compile">
-    <Message Text="(Re)creating specification.zip" />
-    <CleanSpecFiles DirectoryName="data" />
-    <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
-  </Target>
-
- <Target Name="CleanSpecZip" AfterTargets="Clean">
-    <Delete Files="specification.zip" />
-  </Target>
-   
+  </ItemGroup>   
 </Project>
