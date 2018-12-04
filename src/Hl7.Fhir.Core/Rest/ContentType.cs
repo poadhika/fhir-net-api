@@ -151,14 +151,41 @@ namespace Hl7.Fhir.Rest
 
 
         public static string GetMediaTypeFromHeaderValue(string mediaHeaderValue)
+
         {
+
 #if NETSTANDARD1_1
-            System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out System.Net.Http.Headers.MediaTypeHeaderValue headerValue);
-            return headerValue.MediaType.ToLowerInvariant();
+
+                System.Net.Http.Headers.MediaTypeHeaderValue.TryParse(mediaHeaderValue, out System.Net.Http.Headers.MediaTypeHeaderValue headerValue);
+
+                if (headerValue != null)
+
+                {
+                    return headerValue.MediaType.ToLowerInvariant();
+                }
+                else
+                {
+                    return mediaHeaderValue;
+                }
 #else
-            var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
-            return ct.MediaType.ToLowerInvariant();
+            try {
+
+                var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
+
+                return ct.MediaType.ToLowerInvariant();
+
+            }
+
+            catch (System.FormatException)
+
+            {
+
+                return mediaHeaderValue;
+
+            }
+
 #endif
+
         }
 
         public static string GetCharSetFromHeaderValue(string mediaHeaderValue)
